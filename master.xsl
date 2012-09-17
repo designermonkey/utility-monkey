@@ -35,13 +35,19 @@
 	doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" 
 	omit-xml-declaration="yes" 
 	encoding="UTF-8" 
-	indent="yes"/>
+	indent="no"/>
+
+<xsl:strip-space elements="*" />
 
 
 <!--
 	Define any global parameter fallbacks
+
+	@param	device-categorizr	Used to tell what device type is viewing the site. Use as a last minute fix for device specific layouts.
+	@param	environment			Tells which environment the site is running under. Values: production, staging, development
 -->
 <xsl:param name="device-categorizr" />
+<xsl:param name="environment" />
 
 
 <!--
@@ -62,11 +68,13 @@
 	</xsl:variable>
 
 	<!-- Output IE versioned html tag -->
-	<xsl:comment><![CDATA[[if IE 6]><html lang="en" class="no-js ]]><xsl:value-of select="$pages"/><xsl:text> </xsl:text><xsl:value-of select="$device-categorizr"/><![CDATA[ ie ie6 lt-ie9 lt-ie8 lt-ie7"><![endif]]]></xsl:comment>
-	<xsl:comment><![CDATA[[if IE 7]><html lang="en" class="no-js ]]><xsl:value-of select="$pages"/><xsl:text> </xsl:text><xsl:value-of select="$device-categorizr"/><![CDATA[ ie ie7 lt-ie9 lt-ie8"><![endif]]]></xsl:comment>
-	<xsl:comment><![CDATA[[if IE 8]><html lang="en" class="no-js ]]><xsl:value-of select="$pages"/><xsl:text> </xsl:text><xsl:value-of select="$device-categorizr"/><![CDATA[ ie ie8 lt-ie9"><![endif]]]></xsl:comment>
-	<xsl:comment><![CDATA[[if IE 9]><html lang="en" class="no-js ]]><xsl:value-of select="$pages"/><xsl:text> </xsl:text><xsl:value-of select="$device-categorizr"/><![CDATA[ ie ie9"><![endif]]]></xsl:comment>
-	<xsl:comment><![CDATA[[if !(lte IE 9)]><!]]></xsl:comment><html lang="en" class="no-js {$pages} {$device-categorizr}"><xsl:comment><![CDATA[<![endif]]]></xsl:comment>
+	<xsl:comment><![CDATA[[if IE 6]><html lang="en" class="no-js ]]><xsl:value-of select="concat($pages, ' ', $device-categorizr)"/><![CDATA[ ie ie6"><![endif]]]></xsl:comment>
+	<xsl:comment><![CDATA[[if IE 7]><html lang="en" class="no-js ]]><xsl:value-of select="concat($pages, ' ', $device-categorizr)"/><![CDATA[ ie ie7"><![endif]]]></xsl:comment>
+	<xsl:comment><![CDATA[[if IE 8]><html lang="en" class="no-js ]]><xsl:value-of select="concat($pages, ' ', $device-categorizr)"/><![CDATA[ ie ie8"><![endif]]]></xsl:comment>
+	<xsl:comment><![CDATA[[if IE 9]><html lang="en" class="no-js ]]><<xsl:value-of select="concat($pages, ' ', $device-categorizr)"/><![CDATA[ ie ie9"><![endif]]]></xsl:comment>
+	<xsl:comment><![CDATA[[if !(lte IE 9)]><!]]></xsl:comment>
+	<html lang="en" class="no-js {$pages} {$device-categorizr}">
+		<xsl:comment><![CDATA[<![endif]]]></xsl:comment>
 
 		<head>
 			<xsl:apply-templates mode="head-meta"/>

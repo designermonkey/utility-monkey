@@ -22,7 +22,8 @@
 	Import the templates files
 -->
 <xsl:import href="../utilities/get-page-title.xsl" />
-<xsl:import href="../utilities/get-header.xsl" /> <!-- includes get-navigation.xsl -->
+<xsl:import href="../utilities/get-navigation.xsl" />
+<xsl:import href="../utilities/get-header.xsl" />
 <xsl:import href="../utilities/get-footer.xsl" />
 
 

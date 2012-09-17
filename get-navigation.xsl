@@ -14,24 +14,42 @@
 
 <!--
 	Template for navigation
+	Uses a standard Symphony Navigation Datasource
 
-	@param	classes	Class names to apply to all ul elements
+	@param	page-type	Specify a page type to limit menu to
+	@param	classes		Class names to apply to all ul elements
 -->
-<xsl:template name="navigation">
+<xsl:template match="*" mode="navigation">
 
 	<xsl:param name="page-type"/>
 	<xsl:param name="classes"/>
 
-	<nav class="navigation {$page-type}">
+	<nav>
+		<xsl:attribute name="class">
+			navigation
+			<xsl:if test="$page-type">
+				<xsl:text> </xsl:text>
+				<xsl:value-of select="$page-type"/>
+			</xsl:if>
+		</xsl:attribute>
 		<ul>
 			<xsl:if test="$classes">
 				<xsl:attribute name="class">
 					<xsl:value-of select="$classes"/>
 				</xsl:attribute>
 			</xsl:if>
-			<xsl:apply-templates select="page[types/type = $page-type and not(types/type = 'hidden')]">
-				<xsl:with-param name="classes" select="$classes"/>
-			</xsl:apply-templates>
+			<xsl:choose>
+				<xsl:when test="$page-type">
+					<xsl:apply-templates select="page[types/type = $page-type and not(types/type = 'hidden')]" mode="navigation">
+						<xsl:with-param name="classes" select="$classes"/>
+					</xsl:apply-templates>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:apply-templates select="page[not(types/type = 'hidden')]" mode="navigation">
+						<xsl:with-param name="classes" select="$classes"/>
+					</xsl:apply-templates>
+				</xsl:otherwise>
+			</xsl:choose>
 		</ul>
 	</nav>
 </xsl:template>
@@ -39,10 +57,11 @@
 
 <!--
 	Template for single navigation links
+	Uses a standard Symphony Navigation Datasource
 
 	@param	classes	Class names to apply to all ul elements
 -->
-<xsl:template match="page">
+<xsl:template match="page" mode="navigation">
 
 	<xsl:param name="classes"/>
 
@@ -58,6 +77,13 @@
 	</xsl:variable>
 
 	<li>
+		<xsl:attribute name="class">
+			<xsl:for-each select="types/type">
+				<xsl:text> </xsl:text>
+				<xsl:value-of select="@handle"/>
+			</xsl:for-each>
+		</xsl:attribute>
+
 		<a href="{$page-url}">
 			<xsl:if test="@handle = $current-page or @handle = $root-page">
 				<xsl:attribute name="class">active</xsl:attribute>

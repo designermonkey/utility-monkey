@@ -51,6 +51,21 @@
 
 
 <!--
+	Widths for Image Output
+	Used in conjunction with JIT Image templates to provide (slightly more) accurate image sizes, and retina images
+
+	@param	image-width-tv		Width for images for TV categorised devices
+	@param	image-width-desktop	Width for images for Desktop categorised devices
+	@param	image-width-tablet	Width for images for Tablet categorised devices
+	@param	image-width-mobile	Width for images for Mobile categorised devices
+-->
+<xsl:variable name="image-width-tv" select="960"/>
+<xsl:variable name="image-width-desktop" select="960"/>
+<xsl:variable name="image-width-tablet" select="768"/>
+<xsl:variable name="image-width-mobile" select="480"/>
+
+
+<!--
 	Root template
 -->
 <xsl:template match="/">

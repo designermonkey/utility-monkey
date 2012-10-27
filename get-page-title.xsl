@@ -3,10 +3,14 @@
 
 <!--
 	Page Title Template
+
+	@package	Utility Monkey
+	@author		John Porter <john@designermonkey.co.uk>
+	@license	CC0 <http://creativecommons.org/publicdomain/zero/1.0/>
 -->
 <xsl:template name="page-title">
 	<title>
-		<xsl:if test="$current-path != '/'">
+		<xsl:if test="not($current-path = '/')">
 			<xsl:value-of select="/data/params/page-title"/>
 			<xsl:text> | </xsl:text>
 		</xsl:if>

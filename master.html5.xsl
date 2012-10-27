@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <!--
-	Master HTML Stylesheet
-	Import into pages for 
+	Master HTML5 Stylesheet
+	Imported by the switchboard to output HTML5
 
 	@package	Utility Monkey
 	@author		John Porter <john@designermonkey.co.uk>
@@ -13,13 +12,7 @@
 
 
 <!--
-	Import the utilities file
--->
-<xsl:import href="../utilities/utilities.xsl" />
-
-
-<!--
-	Import the templates files
+	Import the HTML5 templates files
 -->
 <xsl:import href="../utilities/get-page-title.xsl" />
 <xsl:import href="../utilities/get-navigation.xsl" />
@@ -35,40 +28,15 @@
 	doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" 
 	omit-xml-declaration="yes" 
 	encoding="UTF-8" 
-	indent="no"/>
+	indent="yes"/>
 
 <xsl:strip-space elements="*" />
 
 
 <!--
-	Define any global parameter fallbacks
-
-	@param	device-categorizr	Used to tell what device type is viewing the site. Use as a last minute fix for device specific layouts.
-	@param	environment			Tells which environment the site is running under. Values: production, staging, development
--->
-<xsl:param name="device-categorizr" />
-<xsl:param name="environment" />
-
-
-<!--
-	Widths for Image Output
-	Used in conjunction with JIT Image templates to provide (slightly more) accurate image sizes, and retina images
-
-	@param	image-width-tv		Width for images for TV categorised devices
-	@param	image-width-desktop	Width for images for Desktop categorised devices
-	@param	image-width-tablet	Width for images for Tablet categorised devices
-	@param	image-width-mobile	Width for images for Mobile categorised devices
--->
-<xsl:variable name="image-width-tv" select="960"/>
-<xsl:variable name="image-width-desktop" select="960"/>
-<xsl:variable name="image-width-tablet" select="768"/>
-<xsl:variable name="image-width-mobile" select="480"/>
-
-
-<!--
 	Root template
 -->
-<xsl:template match="/">
+<xsl:template match="/" mode="html5">
 
 	<!-- Create page name classes -->
 	<xsl:variable name="pages">
@@ -117,16 +85,30 @@
 <xsl:template match="data" mode="head-meta">
 	<xsl:comment><![CDATA[[if lte IE 9]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/><![endif]]]></xsl:comment>
 
-
-	<meta name="description" content="Arc is a full service Brand Activation agency, built on the three specialist disciplines of shopper, experiential and sponsorship"/>
-	<meta name="author" content="Produced by Airlock (airlock.com) in London, England."/>
+	<base href="{$root}"/>
+	<meta name="description" content=""/>
+	<meta name="author" content=""/>
 	<meta name="generator" content="Symphony CMS"/>
-	<!-- Added max and min scale to prevent page from scaling on orientation change -->
-	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0,user-scalable=no"/>
+
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,initial-scale=1.0"/>
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta http-equiv="cleartype" content="on">
+
 	<xsl:call-template name="page-title"/>
+
+	<!-- Shortcut and Tile Icons -->
 	<link rel="shortcut icon" href="{$workspace}/assets/img/favicon.ico"/>
-	<link rel="canonical" href="{$root}"/>
-	<meta name="apple-mobile-web-app-capable" content="yes"/>
+
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/touch/apple-touch-icon-144x144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/touch/apple-touch-icon-114x114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/touch/apple-touch-icon-72x72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="img/touch/apple-touch-icon-57x57-precomposed.png">
+	<link rel="shortcut icon" href="img/touch/apple-touch-icon.png">
+
+	<meta name="msapplication-TileImage" content="img/touch/apple-touch-icon-144x144-precomposed.png">
+	<meta name="msapplication-TileColor" content="#222222">
+		
 </xsl:template>
 
 
@@ -136,16 +118,13 @@
 <xsl:template match="data" mode="global-css">
 	<xsl:choose>
 		<xsl:when test="$environment = 'development'">
-			<link href="{$workspace}/assets/js/video-js/video-js.min.css" rel="stylesheet"/>
 			<link rel="stylesheet/less" type="text/css" href="{$workspace}/assets/less/styles.less"/>
 		</xsl:when>
 		<xsl:when test="$environment = 'staging'">
-			<link href="{$workspace}/assets/js/video-js/video-js.min.css" rel="stylesheet"/>
 			<link rel="stylesheet/less" type="text/css" href="{$workspace}/assets/less/styles.less"/>
 		</xsl:when>
 		<xsl:when test="$environment = 'production'">
-			<link href="{$workspace}/assets/js/video-js/video-js.min.css" rel="stylesheet"/>
-			<link rel="stylesheet/less" type="text/css" href="{$workspace}/assets/less/styles.less"/>
+			<link rel="stylesheet/css" type="text/css" href="{$workspace}/assets/css/styles.css"/>
 		</xsl:when>
 	</xsl:choose>
 </xsl:template>
@@ -159,7 +138,7 @@
 		<xsl:when test="$environment = 'development'">
 			<!-- Less Debugging Mode -->
 			<script>var less = {env: "development"};</script>
-			<script src="{$workspace}/assets/js/less-1.3.0.min.js" type="text/javascript"></script>
+			<script src="{$workspace}/assets/js/less-1.3.0.js" type="text/javascript"></script>
 			<script src="{$workspace}/assets/js/modernizr.js"></script>
 		</xsl:when>
 		<xsl:when test="$environment = 'staging'">
@@ -178,18 +157,10 @@
 -->
 <xsl:template match="data" mode="foot-js">
 
-	<!-- Get Google hosted copy of jQuery or local -->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-    <script>window.jQuery || document.write('&lt;script src="{$workspace}/assets/js/jquery-1.8.0.min.js"><\/script>')</script>
-    <!--<script src="{$workspace}/assets/js/jquery-ui-1.8.20.custom.min.js" type="text/javascript"></script>-->
+    <script src="{$workspace}/assets/js/jquery-1.8.0.min.js"></script>
 	
 	<!-- Replacement animation function, which allows CSS3 transitions -->
 	<!--<script src="{$workspace}/assets/js/jquery.transit.min.js" type="text/javascript"></script>-->
-
-	<!-- Get hosted copy of VideoJS or local -->
-	<!--<script src="http://vjs.zencdn.net/c/video.js"></script>-->
-	<!--<script>window.VideoJS || document.write('&lt;script src="{$workspace}/assets/js/videojs.js"><\/script>')</script>-->
-	<!--<script>VideoJS.options.flash.swf = "<xsl:value-of select="$workspace"/>/assets/js/video-js/video-js.swf";</script>-->
 
 	<script src="{$workspace}/assets/js/js-monkey.js" type="text/javascript"></script>
 	

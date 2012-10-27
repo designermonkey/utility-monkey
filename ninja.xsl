@@ -71,25 +71,4 @@
 </xsl:template>
 
 
-<!--
-	Output Anchors
-	Obfuscates mailto links
--->
-<xsl:template match="a" mode="ninja" priority="1">
-	<xsl:element name="a">
-		<xsl:choose>
-			<xsl:when test="starts-with(@href, 'mailto')">
-				<xsl:attribute name="data-identity"><xsl:value-of select="substring-after(substring-before(@href,'@'), ':')"/></xsl:attribute>
-				<xsl:attribute name="data-domain"><xsl:value-of select="substring-after(@href,'@')"/></xsl:attribute>
-				<xsl:attribute name="class">obfuscated</xsl:attribute>
-				<xsl:attribute name="href">#</xsl:attribute>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:apply-templates select="* | @* | text()" mode="html"/>		
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:element>
-</xsl:template>
-
-
 </xsl:stylesheet>

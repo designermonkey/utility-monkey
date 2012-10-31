@@ -33,11 +33,11 @@
 <!--
 	Root template
 -->
-<xsl:template match="/" mode="xml">
+<xsl:template match="/" mode="json">
 
-	<data>
-		<xsl:apply-templates select="data" mode="xml"/>
-	</data>
+	<xsl:text>{</xsl:text>
+		<xsl:apply-templates select="data" mode="json"/>
+	<xsl:text>}</xsl:text>
 
 </xsl:template>
 

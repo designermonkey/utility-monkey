@@ -54,7 +54,7 @@
 	<xsl:comment><![CDATA[[if IE 6]><html lang="en" class="no-js ]]><xsl:value-of select="concat($pages, ' ', $device-categorizr)"/><![CDATA[ ie ie6"><![endif]]]></xsl:comment>
 	<xsl:comment><![CDATA[[if IE 7]><html lang="en" class="no-js ]]><xsl:value-of select="concat($pages, ' ', $device-categorizr)"/><![CDATA[ ie ie7"><![endif]]]></xsl:comment>
 	<xsl:comment><![CDATA[[if IE 8]><html lang="en" class="no-js ]]><xsl:value-of select="concat($pages, ' ', $device-categorizr)"/><![CDATA[ ie ie8"><![endif]]]></xsl:comment>
-	<xsl:comment><![CDATA[[if IE 9]><html lang="en" class="no-js ]]><<xsl:value-of select="concat($pages, ' ', $device-categorizr)"/><![CDATA[ ie ie9"><![endif]]]></xsl:comment>
+	<xsl:comment><![CDATA[[if IE 9]><html lang="en" class="no-js ]]><xsl:value-of select="concat($pages, ' ', $device-categorizr)"/><![CDATA[ ie ie9"><![endif]]]></xsl:comment>
 	<xsl:comment><![CDATA[[if !(lte IE 9)]><!]]></xsl:comment>
 	<html lang="en" class="no-js {$pages} {$device-categorizr}">
 		<xsl:comment><![CDATA[<![endif]]]></xsl:comment>
@@ -91,23 +91,23 @@
 	<meta name="generator" content="Symphony CMS"/>
 
 	<meta name="viewport" content="width=device-width,minimum-scale=1.0,initial-scale=1.0"/>
-	<meta name="HandheldFriendly" content="True">
-	<meta name="MobileOptimized" content="320">
-	<meta http-equiv="cleartype" content="on">
+	<meta name="HandheldFriendly" content="True"/>
+	<meta name="MobileOptimized" content="320"/>
+	<meta http-equiv="cleartype" content="on"/>
 
 	<xsl:call-template name="page-title"/>
 
 	<!-- Shortcut and Tile Icons -->
 	<link rel="shortcut icon" href="{$workspace}/assets/img/favicon.ico"/>
 
-	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/touch/apple-touch-icon-144x144-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/touch/apple-touch-icon-114x114-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/touch/apple-touch-icon-72x72-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" href="img/touch/apple-touch-icon-57x57-precomposed.png">
-	<link rel="shortcut icon" href="img/touch/apple-touch-icon.png">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/touch/apple-touch-icon-144x144-precomposed.png"/>
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/touch/apple-touch-icon-114x114-precomposed.png"/>
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/touch/apple-touch-icon-72x72-precomposed.png"/>
+	<link rel="apple-touch-icon-precomposed" href="img/touch/apple-touch-icon-57x57-precomposed.png"/>
+	<link rel="shortcut icon" href="img/touch/apple-touch-icon.png"/>
 
-	<meta name="msapplication-TileImage" content="img/touch/apple-touch-icon-144x144-precomposed.png">
-	<meta name="msapplication-TileColor" content="#222222">
+	<meta name="msapplication-TileImage" content="img/touch/apple-touch-icon-144x144-precomposed.png"/>
+	<meta name="msapplication-TileColor" content="#222222"/>
 		
 </xsl:template>
 

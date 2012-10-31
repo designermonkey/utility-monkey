@@ -72,7 +72,7 @@
 		</xsl:when>
 		<!-- Call templates for API -->
 		<xsl:when test="$token = $expected-json-token">
-			<xsl:apply-templates select="." mode="api"/>
+			<xsl:apply-templates select="." mode="json"/>
 		</xsl:when>
 		<!-- Call normal HTML5 templates -->
 		<xsl:otherwise>

@@ -18,6 +18,7 @@
 
 	@param node			XML image node
 	@param alt			alt tag string. default empty
+	@param classes		provide class names to add to the img tag
 	@param do-retina	whether to provide retina sizes
 	@param do-lazy-load	whether to use a lazy loading JavaScript
 -->
@@ -25,8 +26,10 @@
 	
 	<xsl:param name="node"/>
 	<xsl:param name="alt" select="''"/>
+	<xsl:param name="classes" select="''"/>
 	<xsl:param name="do-retina" select="true()"/>
 	<xsl:param name="do-lazy-load" select="false()"/>
+	<xsl:param name="placeholder" select="concat($workspace, '/assets/img/trans.gif')"/>
 
 	<xsl:variable name="data-low" select="concat($root, '/image/1/', $node/meta/@width div 2, '/', $node/meta/@height div 2, '/', $node/@path, '/', $node/filename/text())"/>
 	<xsl:variable name="data-high" select="concat($root, '/image/1/', $node/meta/@width, '/', $node/meta/@height, '/', $node/@path, '/', $node/filename/text())"/>
@@ -35,22 +38,22 @@
 		<xsl:when test="$do-lazy-load">
 			<xsl:choose>
 				<xsl:when test="$do-retina">
-					<img class="lazyload" src="{$workspace}/assets/img/trans.gif" data-low="{$data-low}" data-high="{$data-high}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
+					<img class="lazyload {$classes}" src="{$placeholder}" data-low="{$data-low}" data-high="{$data-high}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
 				</xsl:when>
 				<xsl:otherwise>
-					<img class="lazyload" src="{$data-low}/assets/img/trans.gif" data-low="{$data-low}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
+					<img class="lazyload {$classes}" src="{$placeholder}" data-low="{$data-low}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
 				</xsl:otherwise>
 			</xsl:choose>
 			<noscript>
-				<img src="{$data-low}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
+				<img class="{$classes}" src="{$data-low}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
 			</noscript>
 		</xsl:when>
 		<xsl:otherwise>
 				<xsl:when test="$do-retina">
-					<img src="{$data-high}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
+					<img class="{$classes}" src="{$data-high}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
 				</xsl:when>
 				<xsl:otherwise>
-					<img src="{$data-low}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
+					<img class="{$classes}" src="{$data-low}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
 				</xsl:otherwise>
 		</xsl:otherwise>
 	</xsl:choose>
@@ -69,7 +72,9 @@
 		
 	<xsl:param name="node"/>
 	<xsl:param name="alt" select="''"/>
+	<xsl:param name="classes" select="''"/>
 	<xsl:param name="device" select="$device-categorizr"/>
+	<xsl:param name="specific-width" select="''"/>
 	<xsl:param name="do-retina" select="true()"/>
 	<xsl:param name="do-lazy-load" select="false()"/>
 
@@ -77,6 +82,7 @@
 		<xsl:call-template name="jit-image-meta">
 			<xsl:with-param name="node" select="$node"/>
 			<xsl:with-param name="device" select="$device"/>
+			<xsl:with-param name="specific-width" select="$specific-width"/>
 		</xsl:call-template>
 	</xsl:variable>
 
@@ -84,6 +90,7 @@
 		<xsl:call-template name="jit-image-meta">
 			<xsl:with-param name="node" select="$node"/>
 			<xsl:with-param name="device" select="$device"/>
+			<xsl:with-param name="specific-width" select="$specific-width"/>
 			<xsl:with-param name="return" select="'width'"/>
 		</xsl:call-template>
 	</xsl:variable>
@@ -92,6 +99,7 @@
 		<xsl:call-template name="jit-image-meta">
 			<xsl:with-param name="node" select="$node"/>
 			<xsl:with-param name="device" select="$device"/>
+			<xsl:with-param name="specific-width" select="$specific-width"/>
 			<xsl:with-param name="return" select="'height'"/>
 		</xsl:call-template>
 	</xsl:variable>
@@ -102,6 +110,7 @@
 				<xsl:with-param name="node" select="$node"/>
 				<xsl:with-param name="retina" select="true()"/>
 				<xsl:with-param name="device" select="$device"/>
+				<xsl:with-param name="specific-width" select="$specific-width"/>
 			</xsl:call-template>
 		</xsl:variable>
 	</xsl:if>
@@ -110,22 +119,22 @@
 		<xsl:when test="$do-lazy-load">
 			<xsl:choose>
 				<xsl:when test="$do-retina">
-					<img class="lazyload" src="{$workspace}/assets/img/trans.gif" data-low="{$path}" data-high="{$retina-path}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
+					<img class="lazyload {$classes}" src="{$workspace}/assets/img/trans.gif" data-low="{$path}" data-high="{$retina-path}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
 				</xsl:when>
 				<xsl:otherwise>
-					<img class="lazyload" src="{$data-low}/assets/img/trans.gif" data-low="{$path}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
+					<img class="lazyload {$classes}" src="{$data-low}/assets/img/trans.gif" data-low="{$path}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
 				</xsl:otherwise>
 			</xsl:choose>
 			<noscript>
-				<img src="{$path}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
+				<img class="{$classes}" src="{$path}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
 			</noscript>
 		</xsl:when>
 		<xsl:otherwise>
 				<xsl:when test="$do-retina">
-					<img src="{$retina-path}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
+					<img class="{$classes}" src="{$retina-path}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
 				</xsl:when>
 				<xsl:otherwise>
-					<img src="{$path}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
+					<img class="{$classes}" src="{$path}" width="{$node/meta/@width div 2}" height="{$node/meta/@height div 2}" alt="{$alt}"/>
 				</xsl:otherwise>
 		</xsl:otherwise>
 	</xsl:choose>
@@ -138,7 +147,9 @@
 	Provides different meta for JIT sized images
 
 	@param node			XML image node
+	@param retina		Whether to output retina image data
 	@param device		string desktop, tablet, mobile, tv. default $device-categorizr!
+	@param specific-width	override the device setting with a specific width number()
 	@param return		string path, width, height
 -->
 <xsl:template name="jit-image-meta">
@@ -146,6 +157,7 @@
 	<xsl:param name="node"/>
 	<xsl:param name="retina" select="false()"/>
 	<xsl:param name="device" select="$device-categorizr"/>
+	<xsl:param name="specific-width" select="''"/>
 	<xsl:param name="return" select="'path'"/>
 
 	<xsl:variable name="old-width" select="$node/meta/@width"/>
@@ -163,6 +175,9 @@
 			</xsl:when>
 			<xsl:when test="$device = 'tv'">
 				<xsl:value-of select="$image-width-tv"/>
+			</xsl:when>
+			<xsl:when test="not($specific-width = '')">
+				<xsl:value-of select="$specific-width"/>
 			</xsl:when>
 		</xsl:choose>
 	</xsl:variable>

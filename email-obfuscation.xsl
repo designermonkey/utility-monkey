@@ -12,6 +12,7 @@
 <xsl:template name="obfuscated-email">
 	
 	<xsl:param name="node"/>
+	<xsl:param name="classes" select="''"/>
 
 	<xsl:variable name="string">
 		<xsl:choose>
@@ -34,7 +35,7 @@
 			</xsl:otherwise>
 		</xsl:choose>
 		<xsl:attribute name="data-domain"><xsl:value-of select="substring-after($string,'@')"/></xsl:attribute>
-		<xsl:attribute name="class">obfuscated</xsl:attribute>
+		<xsl:attribute name="class">obfuscated <xsl:value-of select="$classes"/></xsl:attribute>
 		<xsl:attribute name="href">#</xsl:attribute>
 	</xsl:element>
 

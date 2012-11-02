@@ -14,8 +14,8 @@
 	Get UTC From ISO Datetime
 	Output a UTC (GMT0) Date and Time from any ISO-8601 Date and Time
 
-	Accepts any ISO-8601 Date and Time with any timezone adjustment (eg. 2012-10-09T16:19:00+04:00)
-	Outputs a UTC (GMT0) Date and Time (eg. 2012-10-09T12:19:00+00:00)
+	@param datetime	Accepts any ISO-8601 Date and Time with any timezone adjustment (eg. 2012-10-09T16:19:00+04:00)
+	@return			Outputs a UTC (GMT0) Date and Time (eg. 2012-10-09T12:19:00+00:00)
 -->
 <xsl:template name="get-utc-from-iso-datetime">
 	
@@ -66,8 +66,8 @@
 	Get UTC From a String Datetime
 	Output a UTC (GMT0) Date and Time from any ISO-8601 Date and Time
 
-	Accepts a String Date and Time (eg. Mon, 09 Oct 2012 16:19:00 +0400)
-	Outputs an ISO-8601 Date and Time (eg. 2012-10-09T16:19:00+04:00)
+	@param datetime	Accepts a String Date and Time (eg. Mon, 09 Oct 2012 16:19:00 +0400)
+	@return			Outputs an ISO-8601 Date and Time (eg. 2012-10-09T16:19:00+04:00)
 -->
 <xsl:template name="get-utc-from-string-datetime">
 	

@@ -146,11 +146,16 @@
 	JIT Image Meta
 	Provides different meta for JIT sized images
 
-	@param node			XML image node
-	@param retina		Whether to output retina image data
-	@param device		string desktop, tablet, mobile, tv. default $device-categorizr!
+	@param node				XML image node
+	@param retina			Whether to output retina image data
+	@param device			string desktop, tablet, mobile, tv. default $device-categorizr!
 	@param specific-width	override the device setting with a specific width number()
-	@param return		string path, width, height
+	@param mobile-width		override the default supplied image width for mobiles
+	@param tablet-width		override the default supplied image width for tablets
+	@param desktop-width	override the default supplied image width for desktops
+	@param tv-width			override the default supplied image width for tvs
+
+	@param return			string path, width, height
 -->
 <xsl:template name="jit-image-meta">
 	
@@ -160,21 +165,27 @@
 	<xsl:param name="specific-width" select="''"/>
 	<xsl:param name="return" select="'path'"/>
 
+	<xsl:param name="mobile-width" select="$image-width-mobile"/>
+	<xsl:param name="tablet-width" select="$image-width-tablet"/>
+	<xsl:param name="desktop-width" select="$image-width-desktop"/>
+	<xsl:param name="tv-width" select="$image-width-tv"/>
+
+
 	<xsl:variable name="old-width" select="$node/meta/@width"/>
 	<xsl:variable name="old-height" select="$node/meta/@height"/>
 	<xsl:variable name="new-width">
 		<xsl:choose>
 			<xsl:when test="$device = 'mobile'">
-				<xsl:value-of select="$image-width-mobile"/>
+				<xsl:value-of select="$mobile-width"/>
 			</xsl:when>
 			<xsl:when test="$device = 'tablet'">
-				<xsl:value-of select="$image-width-tablet"/>
+				<xsl:value-of select="$tablet-width"/>
 			</xsl:when>
 			<xsl:when test="$device = 'desktop'">
-				<xsl:value-of select="$image-width-desktop"/>
+				<xsl:value-of select="$desktop-width"/>
 			</xsl:when>
 			<xsl:when test="$device = 'tv'">
-				<xsl:value-of select="$image-width-tv"/>
+				<xsl:value-of select="$tv-width"/>
 			</xsl:when>
 			<xsl:when test="not($specific-width = '')">
 				<xsl:value-of select="$specific-width"/>

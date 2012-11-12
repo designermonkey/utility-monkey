@@ -31,8 +31,8 @@
 	<xsl:param name="do-lazy-load" select="false()"/>
 	<xsl:param name="placeholder" select="concat($workspace, '/assets/img/trans.gif')"/>
 
-	<xsl:variable name="data-low" select="concat($root, '/image/1/', $node/meta/@width div 2, '/', $node/meta/@height div 2, '/', $node/@path, '/', $node/filename/text())"/>
-	<xsl:variable name="data-high" select="concat($root, '/image/1/', $node/meta/@width, '/', $node/meta/@height, '/', $node/@path, '/', $node/filename/text())"/>
+	<xsl:variable name="data-low" select="concat($root, '/image/1/', $node/meta/@width div 2, '/', $node/meta/@height div 2, $node/@path, '/', $node/filename/text())"/>
+	<xsl:variable name="data-high" select="concat($root, '/image/1/', $node/meta/@width, '/', $node/meta/@height, $node/@path, '/', $node/filename/text())"/>
 
 	<xsl:choose>
 		<xsl:when test="$do-lazy-load">
